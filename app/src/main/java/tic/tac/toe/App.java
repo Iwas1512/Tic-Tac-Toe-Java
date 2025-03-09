@@ -28,7 +28,7 @@ public class App {
             System.out.println(gameInstance.getResultMessage());
         } while (playAgain());
 
-        System.out.println("Goodbye!");
+        System.out.println("Goodbye, I hope you enjoyed!");
         scanner.close();
     }
 
