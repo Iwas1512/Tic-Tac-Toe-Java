@@ -77,6 +77,5 @@ public class game {
     }
 
     private void switchPlayer() {
-        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X'; //conditional, I might switch this into an If Statement, Revisit this and make it more efficiant
-    }
+        currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
 }
