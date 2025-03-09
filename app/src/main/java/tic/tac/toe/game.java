@@ -27,7 +27,7 @@ public class game {
     }
 
     public boolean isValidMove(int move) {
-        return board[move] != 'X' && board[move] != 'O'; //checking if its empty basically
+        return board[move] != 'X' && board[move] != 'O'; 
     }
 
     public void makeMove(int move) {
@@ -78,4 +78,5 @@ public class game {
 
     private void switchPlayer() {
         currentPlayer = (currentPlayer == 'X') ? 'O' : 'X';
+}
 }

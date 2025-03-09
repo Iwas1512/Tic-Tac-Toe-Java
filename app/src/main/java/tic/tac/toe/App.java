@@ -14,7 +14,7 @@ public class App {
     public static void main(String[] args) {
         game gameInstance = new game();
 
-        System.out.println("Welcome to Tic-Tac-Toe!, This is a 2 player HumanvsHuman Implementation");
+        System.out.println("Welcome to Anlil's Tic-Tac-Toe!, This is a 2 player HumanvsHuman Implementation");
 
         do {
             gameInstance.resetGame();
