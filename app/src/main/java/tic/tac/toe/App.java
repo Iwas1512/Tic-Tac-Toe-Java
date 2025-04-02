@@ -4,8 +4,8 @@
 
 package tic.tac.toe;
 
-
-
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class App {
@@ -14,7 +14,7 @@ public class App {
     public static void main(String[] args) {
         game gameInstance = new game();
 
-        System.out.println("Welcome to Anlil's Tic-Tac-Toe!, This is a 2 player HumanvsHuman Implementation");
+        System.out.println("Welcome to Anlil's Tic-Tac-Toe! I added documentation to the code so you can track scores! ENJOY");
 
         do {
             gameInstance.resetGame();
@@ -26,16 +26,29 @@ public class App {
             }
             System.out.println(gameInstance.getBoardDisplay());
             System.out.println(gameInstance.getResultMessage());
-        } while (playAgain());
+            
 
+            System.out.println("The current log is:");
+            System.out.println(gameInstance.getGameLog());
+            
+        } while (playAgain(gameInstance));
+
+
+        saveGameLogToFile(gameInstance);
+        
         System.out.println("Goodbye, I hope you enjoyed!");
         scanner.close();
     }
 
 
-
-
-    //  functions for some game logic below, Consider making a possible third class to seperate Moving Logic Vs Game Logic, For exmple, a class that has getmove, move, etc.. and a class that has the winning conditions.
+    private static void saveGameLogToFile(game gameInstance) {
+        System.out.println("Writing the game log to disk. Please see game.txt for the final statistics!");
+        try (FileWriter writer = new FileWriter("game.txt")) {
+            writer.write(gameInstance.getGameLogForFile());
+        } catch (IOException e) {
+            System.out.println("An error occurred while saving the game log: " + e.getMessage());
+        }
+    }
 
     private static int getValidMove(game gameInstance) { 
         while (true) {
@@ -50,11 +63,16 @@ public class App {
         }
     }
 
-    private static boolean playAgain() {
+    private static boolean playAgain(game gameInstance) {
         while (true) {
             System.out.print("Would you like to play again (yes/no)? ");
-            String input = scanner.nextLine().trim().toLowerCase(); //important here to convert to lower case to account for errors
-            if (input.equals("yes")) return true;
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("yes")) {
+                // Inform the user who will go first in the next game
+                char nextPlayer = gameInstance.getCurrentPlayer();
+                System.out.println("Great! This time " + nextPlayer + " will go first!");
+                return true;
+            }
             if (input.equals("no")) return false;
             System.out.println("That is not a valid entry!");
         }
