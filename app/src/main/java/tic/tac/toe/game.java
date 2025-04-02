@@ -13,7 +13,7 @@ public class game {
 
     public game() {
         resetGame();
-        // Initialize statistics
+        
         playerXWins = 0;
         playerOWins = 0;
         ties = 0;
