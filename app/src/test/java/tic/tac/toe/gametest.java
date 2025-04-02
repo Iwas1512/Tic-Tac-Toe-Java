@@ -1,9 +1,8 @@
 package tic.tac.toe;
 
-
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class gametest {
     
@@ -21,7 +20,7 @@ public class gametest {
         assertEquals(true, testGame.isValidMove(0));
         assertEquals(true, testGame.isValidMove(8));
         
-        testGame.makeMove(0); //for position 1
+        testGame.makeMove(0);
         assertEquals(false, testGame.isValidMove(0));
         assertEquals(true, testGame.isValidMove(1));
     }
@@ -39,7 +38,6 @@ public class gametest {
     @Test
     public void testHorizontalWinFirstRow() {
         game testGame = new game();
-        // X plays positions 1, 2,and 3 
         testGame.makeMove(0); 
         assertEquals(false, testGame.isGameOver());
         
@@ -60,7 +58,6 @@ public class gametest {
     @Test
     public void testVerticalWinFirstColumn() {
         game testGame = new game();
-        // O plays positions 1, 4, 7 (first column)
         testGame.makeMove(1); 
         testGame.makeMove(0); 
         testGame.makeMove(2);
@@ -75,7 +72,6 @@ public class gametest {
     @Test
     public void testDiagonalWinTopLeftToBottomRight() {
         game testGame = new game();
-        // X plays positions 1, 5, 9 
         testGame.makeMove(0); 
         testGame.makeMove(1); 
         testGame.makeMove(4); 
@@ -89,7 +85,6 @@ public class gametest {
     @Test
     public void testDiagonalWinTopRightToBottomLeft() {
         game testGame = new game();
-        // O plays positions 3, 5, 7 (another diagnol test)
         testGame.makeMove(0); 
         testGame.makeMove(2); 
         testGame.makeMove(1); 
@@ -101,8 +96,6 @@ public class gametest {
         assertEquals("Player O wins!", testGame.getResultMessage());
     }
     
- 
-    
     @Test
     public void testResetGame() {
         game testGame = new game();
@@ -110,10 +103,8 @@ public class gametest {
         testGame.makeMove(0);
         testGame.makeMove(1);
         
-   
         testGame.resetGame();
         
-        // make sure the game is rest here, checking statuses
         assertEquals('X', testGame.getCurrentPlayer());
         assertEquals(false, testGame.isGameOver());
         assertEquals("", testGame.getResultMessage());
@@ -126,7 +117,6 @@ public class gametest {
         game testGame = new game();
         String display = testGame.getBoardDisplay();
         
-       //does the board work correctly?
         assertEquals(true, display.contains("1"));
         assertEquals(true, display.contains("9"));
         assertEquals(true, display.contains("|"));
@@ -146,5 +136,88 @@ public class gametest {
         display = testGame.getBoardDisplay();
         assertEquals(true, display.contains("O"));
         assertEquals(false, display.contains("2"));
+    }
+    
+    @Test
+    public void testGameStatisticsTracking() {
+        game testGame = new game();
+        
+        testGame.makeMove(0);
+        testGame.makeMove(3);
+        testGame.makeMove(1);
+        testGame.makeMove(4);
+        testGame.makeMove(2);
+        
+        assertEquals(true, testGame.isGameOver());
+        assertEquals("Player X wins!", testGame.getResultMessage());
+        
+        String gameLog = testGame.getGameLog();
+        assertTrue(gameLog.contains("Player X Wins   1"));
+        assertTrue(gameLog.contains("Player O Wins   0"));
+        assertTrue(gameLog.contains("Ties            0"));
+    }
+    
+    @Test
+    public void testLoserGoesFirst() {
+        game testGame = new game();
+        
+        testGame.makeMove(0);
+        testGame.makeMove(3);
+        testGame.makeMove(1);
+        testGame.makeMove(4);
+        testGame.makeMove(2);
+        
+        testGame.resetGame();
+        
+        assertEquals('O', testGame.getCurrentPlayer());
+        
+        testGame.makeMove(0);
+        testGame.makeMove(3);
+        testGame.makeMove(1);
+        testGame.makeMove(4);
+        testGame.makeMove(2);
+        
+        testGame.resetGame();
+        assertEquals('X', testGame.getCurrentPlayer());
+    }
+    
+    @Test
+    public void testDrawGameStatistics() {
+        game testGame = new game();
+        
+        testGame.makeMove(0);
+        testGame.makeMove(1);
+        testGame.makeMove(2);
+        testGame.makeMove(4);
+        testGame.makeMove(7);
+        testGame.makeMove(6);
+        testGame.makeMove(3);
+        testGame.makeMove(5);
+        testGame.makeMove(8);
+        
+        assertEquals(true, testGame.isGameOver());
+        assertEquals("It's a draw!", testGame.getResultMessage());
+        
+        String gameLog = testGame.getGameLog();
+        assertTrue(gameLog.contains("Player X Wins   0"));
+        assertTrue(gameLog.contains("Player O Wins   0"));
+        assertTrue(gameLog.contains("Ties            1"));
+        
+        testGame.resetGame();
+        assertEquals('X', testGame.getCurrentPlayer());
+    }
+    
+    @Test
+    public void testGameLogFormat() {
+        game testGame = new game();
+        
+        String gameLog = testGame.getGameLog();
+        assertTrue(gameLog.contains("Player X Wins   0"));
+        assertTrue(gameLog.contains("Player O Wins   0"));
+        assertTrue(gameLog.contains("Ties            0"));
+        
+        String fileLog = testGame.getGameLogForFile();
+        assertTrue(fileLog.contains("Tic-Tac-Toe Game Statistics"));
+        assertTrue(fileLog.contains("Total Games:   0"));
     }
 }
