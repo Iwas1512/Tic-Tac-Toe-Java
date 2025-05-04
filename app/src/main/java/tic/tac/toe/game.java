@@ -10,6 +10,10 @@ public class game {
     private int playerOWins;
     private int ties;
     private char previousLoser = ' ';
+    
+    private boolean isComputerGame;
+    private char computerMark;
+    private ComputerPlayer computerPlayer;
 
     public game() {
         resetGame();
@@ -17,6 +21,33 @@ public class game {
         playerXWins = 0;
         playerOWins = 0;
         ties = 0;
+        
+        isComputerGame = false;
+        computerPlayer = new ComputerPlayer();
+    }
+    
+    public void setComputerGame(boolean isComputerGame, char computerMark) {
+        this.isComputerGame = isComputerGame;
+        this.computerMark = computerMark;
+    }
+    
+    public boolean isComputerGame() {
+        return isComputerGame;
+    }
+    
+    public boolean isComputerTurn() {
+        return isComputerGame && currentPlayer == computerMark;
+    }
+    
+    public char getComputerMark() {
+        return computerMark;
+    }
+    
+    public int getComputerMove() {
+        if (computerPlayer != null && isComputerTurn()) {
+            return computerPlayer.makeMove(board, computerMark);
+        }
+        return -1;
     }
 
     public void resetGame() {
@@ -108,7 +139,7 @@ public class game {
             }
         }
 
-        // Check for draw
+      
         boolean boardFull = true;
         for (char c : board) {
             if (c != 'X' && c != 'O') {
