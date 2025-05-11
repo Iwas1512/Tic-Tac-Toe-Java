@@ -39,6 +39,6 @@ Or alternatively:
 
 ## Possible Future Improvements
 - Add an AI opponent option (Maybe Use RandomNUM Generator to geenerate spaces 1-9 to choose from) - Done :)
-- Implement a graphical user interface (Must Do Soon, Probably at End of Semester) -TBD
+- Implement a graphical user interface (Must Do Soon, Probably at End of Semester) -TBD- Update: Working on It 05/11/25
 - Add game statistics tracking (Done) :)
 
